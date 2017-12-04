@@ -1,0 +1,48 @@
+version: '2'
+services:
+
+  mariadb:
+    build: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_USER=root
+    ports:
+      - "3307:3306" #mariadb-port
+    container_name: mariadb
+
+  redis-cache:
+    build: redis-cache
+    container_name: redis-cache
+
+  redis-queue:
+    build: redis-queue
+    container_name: redis-queue
+
+  redis-socketio:
+    build: redis-socketio
+    container_name: redis-socketio
+
+  frappe:
+    #volumes:
+    #  - frappe:/home/frappe/frappe-bench:rw
+    build: frappe
+    ports:
+      - "8000:8000" #webserver_port
+      - "9000:9000" #socketio_port
+      - "6787:6787" #file_watcher_port
+    stdin_open: true
+    tty: true
+    links:
+      - redis-cache
+      - redis-queue
+      - redis-socketio
+      - mariadb
+    depends_on:
+      - mariadb
+      - redis-cache
+      - redis-queue
+      - redis-socketio
+    container_name: frappe
+
+#volumes:
+#  frappe:
