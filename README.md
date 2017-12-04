@@ -1,5 +1,4 @@
-# frappe_docker
-[![Build Status](https://travis-ci.org/frappe/frappe_docker.svg?branch=master)](https://travis-ci.org/frappe/frappe_docker)
+# frappe docker with the multi-container
 
 - [Docker](https://docker.com/) is an open source project to pack, ship and run any Linux application in a lighter weight, faster container than a traditional virtual machine.
 
@@ -125,6 +124,11 @@ For more info on how to build this docker container refer to this [Wiki](https:/
 To login to Frappe / ERPNext, open your browser and go to `[your-external-ip]:8000`, probably `localhost:8000`
 
 The default username is "Administrator" and password is what you set when you created the new site.
+
+## Based on
+
+* [frappe_docker](https://github.com/frappe/frappe_docker)
+
 ## Built With
 
 * [Docker](https://www.docker.com/)
