@@ -16,7 +16,6 @@ RUN pip install --upgrade setuptools pip
 RUN useradd -ms /bin/bash frappe
 RUN apt-get install -y curl
 RUN apt-get install -y rlwrap
-#RUN apt-get install redis-tools
 RUN apt-get install -y nano
 
 
@@ -30,7 +29,6 @@ RUN apt-get install -y wkhtmltopdf
 USER frappe
 WORKDIR /home/frappe
 RUN git clone -b develop https://github.com/frappe/bench.git bench-repo
-#ADD frappe-bench /home/frappe/frappe-bench
 
 USER root
 RUN pip install -e bench-repo
@@ -38,4 +36,4 @@ RUN apt-get install -y libmysqlclient-dev mariadb-client mariadb-common
 RUN chown -R frappe:frappe /home/frappe/*
 
 USER frappe
-WORKDIR /home/frappe/frappe-bench
+#WORKDIR /home/frappe/frappe-bench
