@@ -23,9 +23,10 @@ services:
     container_name: redis-socketio
 
   frappe:
-    #volumes:
-    #  - frappe:/home/frappe/frappe-bench:rw
+    volumes:
+      - frappe-bench:/home/frappe/frappe-bench:rw
     build: frappe
+    #working_dir: /home/frappe/frappe-bench
     ports:
       - "8000:8000" #webserver_port
       - "9000:9000" #socketio_port
@@ -44,5 +45,5 @@ services:
       - redis-socketio
     container_name: frappe
 
-#volumes:
-#  frappe:
+volumes:
+  frappe-bench:
