@@ -1,5 +1,7 @@
 # frappe docker with the multi-container
 
+- This project is a workaround for original [frappe_docker](https://github.com/frappe/frappe_docker) which is can not be run on ``Windows 10`` due to ``NTFS`` permission problems. It uses ``named volumes`` instead of host folders.
+
 - [Docker](https://docker.com/) is an open source project to pack, ship and run any Linux application in a lighter weight, faster container than a traditional virtual machine.
 
 - Docker makes it much easier to deploy [frappe](https://github.com/frappe/frappe) on your servers.
@@ -37,11 +39,11 @@ Expose port 3307 inside the container on port 3307 on ALL local host interfaces.
 
 ```
 volumes:
-     - ./frappe-bench:/home/frappe/frappe-bench
-     - ./conf/mariadb-conf.d:/etc/mysql/conf.d
-     - ./redis-conf/redis_socketio.conf:/etc/conf.d/redis.conf
-     - ./redis-conf/redis_queue.conf:/etc/conf.d/redis.conf
-     - ./redis-conf/redis_cache.conf:/etc/conf.d/redis.conf
+     - frappe-frappe-bench-workdir:/home/frappe/frappe-bench:rw
+     - frappe-mariadb-conf:/etc/mysql/conf.d
+     - frappe-redis-cache-conf:/etc/conf.d/
+     - frappe-redis-queue-conf:/etc/conf.d/
+     - frappe-redis-socketio-conf:/etc/conf.d/
 ```
 Exposes a directory inside the host to the container.
 
@@ -85,7 +87,8 @@ Express dependency between services, which has two effects:
 * Clone this repo and change your working directory to frappe_docker
 	
 		git clone --depth 1 https://github.com/frappe/frappe_docker.git
-		cd frappe_docker
+		cd frappe_docker  
+            ./dbench init_volumes
 
 * Build the container and install bench inside the container.
 
@@ -103,7 +106,7 @@ Express dependency between services, which has two effects:
 ##### Make sure your current directory is frappe_docker
 1.	First time setup 
  
-		./dbench init
+		./dbench init_frappe
 
 2.	Command to start all the containers
 
@@ -111,7 +114,8 @@ Express dependency between services, which has two effects:
 
 3.	Command to be executed everytime after starting your containers
 
-		./dbench -s
+		Skip this step
+                  ./dbench -s
 
 4.	Command to enter your container  
 
